@@ -15,7 +15,11 @@ MongoClient.connect('mongodb+srv://<username>:<password>@cluster.vmsa4vl.mongodb
         
 
         app.use(bodyParser.urlencoded({ extended: true}));
-       
+        
+        app.use(express.static('public')) //tell express to make public folder public
+
+        app.use(bodyParser.json()) //get server to read JSON
+
         app.listen(3000, () => console.log('listening on 3000'));
         
         // app.get('/', (req, res) => {
@@ -42,7 +46,36 @@ MongoClient.connect('mongodb+srv://<username>:<password>@cluster.vmsa4vl.mongodb
                 .catch(error => console.error(error))
         });
 
-       
-        
+        app.put('/quotes', (req, res) => {
+            quotesCollection
+                .findOneAndUpdate(
+                    { name: 'luke' },
+                    {
+                        $set: {
+                            name: req.body.name,
+                            quote: req.body.quote,
+                        },
+                    },
+                    {
+                        upsert: true,
+                    }
+                )
+                .then(result => {
+                    res.json('Success')
+                })
+                .catch(error => console.error(error))
+        })
+
+        app.delete('/quotes', (req, res) => {
+            quotesCollection
+                .deleteOne({ name: req.body.name })
+                .then(result => {
+                    if (result.deletedCount === 0) {
+                        return res.json('No quote to delete');
+                    }
+                    res.json(`Deleted Darth Vader's quote`);
+                })
+                .catch(error => console.error(error))
+        })
     })
     .catch(error => console.error(error));
