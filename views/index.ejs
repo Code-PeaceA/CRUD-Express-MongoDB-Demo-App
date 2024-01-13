@@ -3,45 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crexmo Demo App</title>
+    <link rel="stylesheet" href="/style.css">
+    <title>CRUD Demo App</title>
 </head>
 <body>
-    <h1>May Node and Express be with you</h1>
-
-    <form action="/quotes" method="POST">
-        <input type="text" name="name" id="name" placeholder="name">
-        <input type="text" name="quote" id="quote" placeholder="quote">
-        <button type="submit">Submit</button>
-    </form>
-    <h2>Quotes</h2>
-
-    <ul class="quotes">
-        <!-- Loop through quotes -->
-        <% for(var i = 0; i < quotes.length; i++) {%>
-        <li class="quote">
-            <!-- Output name from the iterated quote object -->
-            <span><%= quotes[i].name %></span>:
-            <!-- Output quote from the iterated quote object -->
-            <span><%= quotes[i].quote %></span>
-        </li>
-        <% } %>
-    </ul>
-
-    <div>
-        <h2>Darth Vader invades!</h2>
-        <p>Replace first Yoda's quote with a quote written by Darth Vader</p>
-        <button id="update-button">Replace Yoda's quote</button>
-    </div>
-
-    <div>
-        <h2>Remove Darth Vader!</h2>
-        <p>
-          Delete one Darth Vader's quote. Does nothing if there are no more Darth
-          Vader's quote
-        </p>
-        <button id="delete-button">Delete Darth Vader's quote</button>
-    </div>
-    <div id="message"></div>
+    <main class="box">
+        <h1>My Name Is Gladiator.</h1>
+        <div class="box addQuote">
+            <h2>Add Gladiator Quote</h2>
+            <form action="/quotes" method="POST">
+                <input type="text" name="name" id="name" placeholder="Name">
+                <input type="text" name="quote" id="quote" placeholder="Quote">
+                <button class="button-56" type="submit">Submit</button>
+            </form>
+        </div>
+        <div class="box replaceQuote">
+            <h2>Replace Commodus with Maximus </h2>
+            <p>Replace first Commodus quote with a quote by Maximus</p>
+            <button class="button-56" id="update-button">Replace Quote</button>
+        </div>
+        <div class="box removeQuote">
+            <h2>Too Many Maximus Quotes!</h2>
+            <p>
+            Delete one Maximus quote.
+            <br>Does nothing if there are no more quotes by Maximus.
+            </p>
+            <button class="button-56" id="delete-button">Delete Quote</button>
+        </div>
+        
+        <div class="box showQuotes">
+            <h2>Quotes</h2>
+            <ul class="quotes">
+                <!-- Loop through quotes -->
+                <% for(var i = 0; i < quotes.length; i++) {%>
+                <li class="quote">
+                    <!-- Output name from the iterated quote object -->
+                    <span><%= quotes[i].name %></span>:
+                    <!-- Output quote from the iterated quote object -->
+                    <span><%= quotes[i].quote %></span>
+                </li>
+                <% } %>
+            </ul>
+            <div id="message"></div>
+        </div>
+    </main>
 
     <script src="/main.js"></script>
 </body>

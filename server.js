@@ -6,7 +6,7 @@ app.set('view engine', 'ejs'); //Using EJS as template engine
 
 const MongoClient = require('mongodb').MongoClient;
 
-MongoClient.connect('mongodb+srv://<username>:<password>@cluster.vmsa4vl.mongodb.net/?retryWrites=true&w=majority')
+MongoClient.connect('mongodb+srv://peacealawode:n6afg3Ssb56c4ROj@cluster.vmsa4vl.mongodb.net/?retryWrites=true&w=majority')
     .then(client => {
         console.log('Connected to Database');
         
@@ -36,6 +36,7 @@ MongoClient.connect('mongodb+srv://<username>:<password>@cluster.vmsa4vl.mongodb
                 .catch(error => console.error(error));
         });
 
+        // Get/read data from MongoDB and add results to index file
         app.get('/', (req, res) => {
             db.collection('quotes')
                 .find()
@@ -49,7 +50,7 @@ MongoClient.connect('mongodb+srv://<username>:<password>@cluster.vmsa4vl.mongodb
         app.put('/quotes', (req, res) => {
             quotesCollection
                 .findOneAndUpdate(
-                    { name: 'luke' },
+                    { name: 'Commodus' },
                     {
                         $set: {
                             name: req.body.name,
@@ -57,10 +58,13 @@ MongoClient.connect('mongodb+srv://<username>:<password>@cluster.vmsa4vl.mongodb
                         },
                     },
                     {
-                        upsert: true,
+                        upsert: false, // if no results then whether to add data to bottom
                     }
                 )
                 .then(result => {
+                    if (result === null) {
+                        return res.json('No quote to replace');
+                    }
                     res.json('Success')
                 })
                 .catch(error => console.error(error))
@@ -73,7 +77,7 @@ MongoClient.connect('mongodb+srv://<username>:<password>@cluster.vmsa4vl.mongodb
                     if (result.deletedCount === 0) {
                         return res.json('No quote to delete');
                     }
-                    res.json(`Deleted Darth Vader's quote`);
+                    res.json(`Deleted Maximus' quote`);
                 })
                 .catch(error => console.error(error))
         })

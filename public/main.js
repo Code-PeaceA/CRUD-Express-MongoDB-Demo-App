@@ -5,15 +5,19 @@ update.addEventListener('click', _ => {
         method: 'put',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            name: 'Darth Vader',
-            quote: 'I find your lack of faith disturbing.',
+            name: 'Maximus',
+            quote: 'Are You Not Entertained? Are You Not Entertained? Is This Not Why You Are Here?',
         }),
     })
         .then(res => {
             if (res.ok) return res.json();
         })
         .then(response => {
-            window.location.reload(true);
+            if (response === 'No quote to replace') {
+                messageDiv.textContent = 'No more Commodus quotes to replace!';
+            } else {
+                window.location.reload(true);
+            }
         })
         .catch(error => console.error(error));
 })
@@ -26,7 +30,7 @@ deleteButton.addEventListener('click', _ => {
         method: 'delete',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            name: 'Darth Vader'
+            name: 'Maximus'
         })
     })
         .then(res => {
@@ -34,7 +38,7 @@ deleteButton.addEventListener('click', _ => {
         })
         .then(response => {
             if (response === 'No quote to delete') {
-                messageDiv.textContent = 'No Darth Vader quote to delete';
+                messageDiv.textContent = 'No more Maximus quotes to delete!';
             } else {
                 window.location.reload(true);
             }
